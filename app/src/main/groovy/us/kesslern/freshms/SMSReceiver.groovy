@@ -1,29 +1,31 @@
-package us.kesslern.freshms;
+package us.kesslern.freshms
 
-import android.content.BroadcastReceiver;
-import android.content.Context;
-import android.content.Intent;
-import android.os.Bundle;
-import android.telephony.SmsMessage;
-import android.util.Log;
+import android.content.BroadcastReceiver
+import android.content.Context
+import android.content.Intent
+import android.os.Bundle
+import android.telephony.SmsMessage
+import android.util.Log
+import groovy.transform.CompileStatic
 
-public class SMSReceiver extends BroadcastReceiver {
+@CompileStatic
+class SMSReceiver extends BroadcastReceiver {
 
-    public MainActivity activity;
+    MainActivity activity
 
     @Override
-    public void onReceive(Context context, Intent intent) {
-        Log.v("test", "received");
+    void onReceive(Context context, Intent intent) {
+        Log.v('test', 'received')
 
-        Bundle bundle = intent.getExtras();
+        Bundle bundle = intent.getExtras()
 
-        if (bundle != null) {
-            Object[] pdus = (Object[]) bundle.get("pdus");
+        if (bundle) {
+            Object[] pdus = bundle['pdus'] as Object[]
 
             for (Object pdu : pdus) {
-                SmsMessage message = SmsMessage.createFromPdu((byte[]) pdu);
-                Log.v("test", message.getDisplayMessageBody());
-                activity.update();
+                SmsMessage message = SmsMessage.createFromPdu((byte[]) pdu)
+                Log.v('test', message.displayMessageBody)
+                activity.update()
             }
         }
     }
