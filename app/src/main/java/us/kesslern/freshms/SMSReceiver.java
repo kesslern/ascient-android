@@ -9,6 +9,8 @@ import android.util.Log;
 
 public class SMSReceiver extends BroadcastReceiver {
 
+    public MainActivity activity;
+
     @Override
     public void onReceive(Context context, Intent intent) {
         Log.v("test", "received");
@@ -21,6 +23,7 @@ public class SMSReceiver extends BroadcastReceiver {
             for (Object pdu : pdus) {
                 SmsMessage message = SmsMessage.createFromPdu((byte[]) pdu);
                 Log.v("test", message.getDisplayMessageBody());
+                activity.update();
             }
         }
     }
