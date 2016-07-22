@@ -75,8 +75,8 @@ public class MainActivity extends AppCompatActivity {
 
         if (hasPerm != PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions(this,
-                    new String[]{Manifest.permission.RECEIVE_SMS},
-                    12);
+                    [Manifest.permission.RECEIVE_SMS] as String[],
+                    12)
         }
     }
 }
