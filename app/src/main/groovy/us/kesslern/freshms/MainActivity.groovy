@@ -69,12 +69,7 @@ class MainActivity extends AppCompatActivity {
     }
 
     private void requestPermissions() {
-        PackageManager pm = this.packageManager
-        int hasPerm = pm.checkPermission(
-                Manifest.permission.WRITE_EXTERNAL_STORAGE,
-                this.packageName)
-
-        if (hasPerm != PackageManager.PERMISSION_GRANTED) {
+        if (checkSelfPermission(Manifest.permission.RECEIVE_SMS) != PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions(this,
                     [Manifest.permission.RECEIVE_SMS] as String[],
                     12)
