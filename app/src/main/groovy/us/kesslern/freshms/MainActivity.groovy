@@ -2,6 +2,7 @@ package us.kesslern.freshms
 
 import android.Manifest
 import android.content.IntentFilter
+import android.content.SharedPreferences
 import android.content.pm.PackageManager
 import android.os.Bundle
 import android.support.v4.app.ActivityCompat
@@ -16,8 +17,10 @@ import groovy.transform.CompileStatic
 class MainActivity extends AppCompatActivity {
 
     private static final String TAG = MainActivity.class.getSimpleName()
+    private static final String ENABLED_SWITCH_STATE = 'switch_state'
 
     private int totalReceived = 0
+    private SharedPreferences preferences
     private IntentFilter intentFilter = new IntentFilter('android.provider.Telephony.SMS_RECEIVED')
     private SMSReceiver smsReceiver
 
@@ -25,6 +28,7 @@ class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState)
         contentView = R.layout.activity_main
+        preferences = getPreferences(MODE_PRIVATE)
 
         requestPermissions()
 
@@ -60,12 +64,17 @@ class MainActivity extends AppCompatActivity {
         mySwitch.onCheckedChangeListener = new CompoundButton.OnCheckedChangeListener() {
              void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if (isChecked) {
+                    preferences.edit().putBoolean(ENABLED_SWITCH_STATE, true).commit()
                     enableBroadcastReceiver()
                 } else {
+                    preferences.edit().putBoolean(ENABLED_SWITCH_STATE, false).commit()
                     disableBroadcastReceiver()
                 }
             }
         }
+
+        boolean defaultState = preferences.getBoolean(ENABLED_SWITCH_STATE, false)
+        mySwitch.setChecked(defaultState);
     }
 
     private void requestPermissions() {
