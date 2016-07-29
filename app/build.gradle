@@ -1,9 +1,22 @@
 apply plugin: 'com.android.application'
-apply plugin: 'groovyx.grooid.groovy-android'
+apply plugin: 'groovyx.android'
+apply plugin: 'android-apt'
+
+androidGroovy {
+    options {
+        configure(groovyOptions) {
+            javaAnnotationProcessing = true
+        }
+    }
+}
 
 android {
     compileSdkVersion 24
     buildToolsVersion "24.0.0"
+
+    lintOptions {
+        abortOnError false
+    }
 
     defaultConfig {
         applicationId "us.kesslern.freshms"
@@ -24,5 +37,7 @@ dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
     testCompile 'junit:junit:4.12'
     compile 'com.android.support:appcompat-v7:24.0.0'
-    compile 'org.codehaus.groovy:groovy:2.4.1:grooid'
+    compile 'org.codehaus.groovy:groovy:2.4.6:grooid'
+    compile 'com.jakewharton:butterknife:8.2.1'
+    apt 'com.jakewharton:butterknife-compiler:8.2.1'
 }

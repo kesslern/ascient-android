@@ -1,19 +1,16 @@
 package us.kesslern.freshms
 
-import android.Manifest
 import android.content.IntentFilter
 import android.content.SharedPreferences
-import android.content.pm.PackageManager
 import android.os.Bundle
-import android.support.v4.app.ActivityCompat
 import android.support.v7.app.AppCompatActivity
 import android.util.Log
 import android.widget.CompoundButton
 import android.widget.Switch
 import android.widget.TextView
-import groovy.transform.CompileStatic
+import butterknife.BindView
+import butterknife.ButterKnife
 
-@CompileStatic
 class MainActivity extends AppCompatActivity {
 
     private static final String TAG = MainActivity.class.getSimpleName()
@@ -22,21 +19,34 @@ class MainActivity extends AppCompatActivity {
     private int totalReceived = 0
     private SharedPreferences preferences
     private IntentFilter intentFilter = new IntentFilter('android.provider.Telephony.SMS_RECEIVED')
-    private SMSReceiver smsReceiver
+    private SMSBroadcastReceiver smsReceiver
+    private String clientId = UUID.randomUUID()
+    private String androidId
+
+    @BindView(R.id.totalSent)
+    public TextView totalSentTextView
+    @BindView(R.id.uuid)
+    public TextView uuidTextView
+    @BindView(R.id.switchSync)
+    public Switch syncSwitch
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState)
-        contentView = R.layout.activity_main
+        setContentView(R.layout.activity_main)
+        ButterKnife.bind(this)
+
         preferences = getPreferences(MODE_PRIVATE)
 
-        requestPermissions()
+        androidId = AndroidIdService.getAndroidId(this)
+        PermissionHandlerService.requestPermissions(this)
 
-        smsReceiver = new SMSReceiver()
+        smsReceiver = new SMSBroadcastReceiver()
         smsReceiver.activity = this
 
         initializeSwitch()
         setSentText()
+        uuidTextView.text = "${clientId}\n${androidId}"
     }
 
     void update() {
@@ -55,13 +65,11 @@ class MainActivity extends AppCompatActivity {
     }
 
     private void setSentText() {
-        TextView textView = (TextView) findViewById(R.id.totalSent)
-        textView.setText('Total received: ' + totalReceived)
+        totalSentTextView.text = "Total received: ${totalReceived}"
     }
 
     private void initializeSwitch() {
-        Switch mySwitch = findViewById(R.id.switchSync) as Switch
-        mySwitch.onCheckedChangeListener = new CompoundButton.OnCheckedChangeListener() {
+        syncSwitch.onCheckedChangeListener = new CompoundButton.OnCheckedChangeListener() {
              void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if (isChecked) {
                     preferences.edit().putBoolean(ENABLED_SWITCH_STATE, true).commit()
@@ -73,15 +81,6 @@ class MainActivity extends AppCompatActivity {
             }
         }
 
-        boolean defaultState = preferences.getBoolean(ENABLED_SWITCH_STATE, false)
-        mySwitch.setChecked(defaultState);
-    }
-
-    private void requestPermissions() {
-        if (checkSelfPermission(Manifest.permission.RECEIVE_SMS) != PackageManager.PERMISSION_GRANTED) {
-            ActivityCompat.requestPermissions(this,
-                    [Manifest.permission.RECEIVE_SMS] as String[],
-                    12)
-        }
+        syncSwitch.checked = preferences.getBoolean(ENABLED_SWITCH_STATE, false)
     }
 }

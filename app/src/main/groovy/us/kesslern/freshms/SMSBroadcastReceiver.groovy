@@ -9,7 +9,7 @@ import android.util.Log
 import groovy.transform.CompileStatic
 
 @CompileStatic
-class SMSReceiver extends BroadcastReceiver {
+class SMSBroadcastReceiver extends BroadcastReceiver {
 
     MainActivity activity
 
