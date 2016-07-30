@@ -5,11 +5,16 @@ import android.content.SharedPreferences
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.util.Log
+import android.widget.Button
 import android.widget.CompoundButton
 import android.widget.Switch
 import android.widget.TextView
 import butterknife.BindView
 import butterknife.ButterKnife
+import butterknife.OnClick
+import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter
+import org.springframework.web.client.RestTemplate
+import org.springframework.web.util.UriComponentsBuilder
 
 class MainActivity extends AppCompatActivity {
 
@@ -20,7 +25,7 @@ class MainActivity extends AppCompatActivity {
     private SharedPreferences preferences
     private IntentFilter intentFilter = new IntentFilter('android.provider.Telephony.SMS_RECEIVED')
     private SMSBroadcastReceiver smsReceiver
-    private String clientId = UUID.randomUUID()
+    private String clientToken = UUID.randomUUID()
     private String androidId
 
     @BindView(R.id.totalSent)
@@ -29,6 +34,8 @@ class MainActivity extends AppCompatActivity {
     public TextView uuidTextView
     @BindView(R.id.switchSync)
     public Switch syncSwitch
+    @BindView(R.id.bottomButton)
+    public Button bottomButton
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,12 +48,11 @@ class MainActivity extends AppCompatActivity {
         androidId = AndroidIdService.getAndroidId(this)
         PermissionHandlerService.requestPermissions(this)
 
-        smsReceiver = new SMSBroadcastReceiver()
-        smsReceiver.activity = this
+        smsReceiver = new SMSBroadcastReceiver(activity: this)
 
         initializeSwitch()
         setSentText()
-        uuidTextView.text = "${clientId}\n${androidId}"
+        uuidTextView.text = "${clientToken}\n${androidId}"
     }
 
     void update() {
@@ -64,13 +70,27 @@ class MainActivity extends AppCompatActivity {
         Log.v(TAG, 'Disabled broadcst receiver')
     }
 
+    @OnClick(R.id.bottomButton)
+    void register() {
+        Fluent.async {
+            String uri = 'http://10.0.2.2:7007/phone/register'
+            URI completeUri = UriComponentsBuilder.fromHttpUrl(uri).queryParam("phoneId", androidId).queryParam("clientToken", clientToken).build().toUri()
+
+            RestTemplate restTemplate = new RestTemplate()
+            restTemplate.messageConverters.add(new MappingJackson2HttpMessageConverter())
+            restTemplate.getForObject(completeUri, PhoneClient)
+        }.then {
+            uuidTextView.text = it.phoneId
+        }
+    }
+
     private void setSentText() {
         totalSentTextView.text = "Total received: ${totalReceived}"
     }
 
     private void initializeSwitch() {
         syncSwitch.onCheckedChangeListener = new CompoundButton.OnCheckedChangeListener() {
-             void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+            void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if (isChecked) {
                     preferences.edit().putBoolean(ENABLED_SWITCH_STATE, true).commit()
                     enableBroadcastReceiver()

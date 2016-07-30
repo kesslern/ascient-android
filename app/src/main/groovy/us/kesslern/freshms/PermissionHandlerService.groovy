@@ -18,5 +18,12 @@ public class PermissionHandlerService {
                     [Manifest.permission.RECEIVE_SMS] as String[],
                     12)
         }
-    }
+
+        if (activity.checkSelfPermission(Manifest.permission.INTERNET) != PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(activity,
+                    [Manifest.permission.INTERNET] as String[],
+                    12)
+
+            }
+        }
 }

@@ -18,6 +18,13 @@ android {
         abortOnError false
     }
 
+    packagingOptions {
+        exclude 'META-INF/ASL2.0'
+        exclude 'META-INF/LICENSE'
+        exclude 'META-INF/license.txt'
+        exclude 'META-INF/NOTICE'
+        exclude 'META-INF/notice.txt'
+    }
     defaultConfig {
         applicationId "us.kesslern.freshms"
         minSdkVersion 15
@@ -39,5 +46,8 @@ dependencies {
     compile 'com.android.support:appcompat-v7:24.0.0'
     compile 'org.codehaus.groovy:groovy:2.4.6:grooid'
     compile 'com.jakewharton:butterknife:8.2.1'
+    compile 'org.springframework.android:spring-android-core:1.0.1.RELEASE'
+    compile 'org.springframework.android:spring-android-rest-template:1.0.1.RELEASE'
+    compile 'com.fasterxml.jackson.core:jackson-databind:2.5.0'
     apt 'com.jakewharton:butterknife-compiler:8.2.1'
 }

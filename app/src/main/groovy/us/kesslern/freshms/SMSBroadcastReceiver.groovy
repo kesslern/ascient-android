@@ -7,11 +7,17 @@ import android.os.Bundle
 import android.telephony.SmsMessage
 import android.util.Log
 import groovy.transform.CompileStatic
+import org.springframework.web.client.RestTemplate
 
 @CompileStatic
 class SMSBroadcastReceiver extends BroadcastReceiver {
 
     MainActivity activity
+    RestTemplate restTemplate
+
+    SMSBroadcastReceiver() {
+        restTemplate = new RestTemplate()
+    }
 
     @Override
     void onReceive(Context context, Intent intent) {

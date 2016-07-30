@@ -12,8 +12,8 @@
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Revoke All Clients"
-        android:id="@+id/buttonRevoke"
+        android:text="Register"
+        android:id="@+id/bottomButton"
         android:layout_alignParentBottom="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true" />
