@@ -68,12 +68,12 @@ class MainActivity extends AppCompatActivity {
 
     void enableBroadcastReceiver() {
         registerReceiver(smsReceiver, intentFilter)
-        Log.v(TAG, 'Enabled broadcst receiver')
+        Log.d(TAG, 'Enabled broadcast receiver')
     }
 
     void disableBroadcastReceiver() {
         unregisterReceiver(smsReceiver)
-        Log.v(TAG, 'Disabled broadcst receiver')
+        Log.d(TAG, 'Disabled broadcast receiver')
     }
 
     @OnClick(R.id.bottomButton)
