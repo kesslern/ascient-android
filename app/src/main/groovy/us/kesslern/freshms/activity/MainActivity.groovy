@@ -16,8 +16,8 @@ import org.springframework.http.converter.json.MappingJackson2HttpMessageConvert
 import org.springframework.web.client.RestTemplate
 import org.springframework.web.util.UriComponentsBuilder
 import us.kesslern.freshms.R
-import us.kesslern.freshms.receiver.SMSBroadcastReceiver
 import us.kesslern.freshms.domain.PhoneClient
+import us.kesslern.freshms.receiver.SMSBroadcastReceiver
 import us.kesslern.freshms.service.AndroidIdService
 import us.kesslern.freshms.service.PermissionHandlerService
 import us.kesslern.freshms.util.Fluent
@@ -49,31 +49,27 @@ class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main)
         ButterKnife.bind(this)
 
-        preferences = getPreferences(MODE_PRIVATE)
-
-        androidId = AndroidIdService.getAndroidId(this)
-        PermissionHandlerService.requestPermissions(this)
-
-        smsReceiver = new SMSBroadcastReceiver(activity: this)
-
+        bindDependencies()
         initializeSwitch()
-        setSentText()
+        totalSentTextView.text = 'No messages received.'
+        PermissionHandlerService.requestPermissions(this)
         uuidTextView.text = "${clientToken}\n${androidId}"
     }
 
     void update() {
         totalReceived++
-        setSentText()
+        totalSentTextView.text = "Total received: ${totalReceived}"
     }
 
-    void enableBroadcastReceiver() {
-        registerReceiver(smsReceiver, intentFilter)
-        Log.d(TAG, 'Enabled broadcast receiver')
-    }
+    void updateBroadcastReceiver(boolean enabled) {
+        if (enabled) {
+            registerReceiver(smsReceiver, intentFilter)
+        } else {
+            unregisterReceiver(smsReceiver)
+        }
 
-    void disableBroadcastReceiver() {
-        unregisterReceiver(smsReceiver)
-        Log.d(TAG, 'Disabled broadcast receiver')
+        preferences.edit().putBoolean(ENABLED_SWITCH_STATE, enabled).commit()
+        Log.d(TAG, "${smsReceiver.class.getSimpleName()} state :${enabled}")
     }
 
     @OnClick(R.id.bottomButton)
@@ -90,23 +86,19 @@ class MainActivity extends AppCompatActivity {
         }
     }
 
-    private void setSentText() {
-        totalSentTextView.text = "Total received: ${totalReceived}"
-    }
 
     private void initializeSwitch() {
-        syncSwitch.onCheckedChangeListener = new CompoundButton.OnCheckedChangeListener() {
-            void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if (isChecked) {
-                    preferences.edit().putBoolean(ENABLED_SWITCH_STATE, true).commit()
-                    enableBroadcastReceiver()
-                } else {
-                    preferences.edit().putBoolean(ENABLED_SWITCH_STATE, false).commit()
-                    disableBroadcastReceiver()
-                }
-            }
+        syncSwitch.onCheckedChangeListener = {
+            CompoundButton buttonView, boolean isChecked ->
+                updateBroadcastReceiver(isChecked)
         }
 
         syncSwitch.checked = preferences.getBoolean(ENABLED_SWITCH_STATE, false)
+    }
+
+    private void bindDependencies() {
+        smsReceiver = new SMSBroadcastReceiver(activity: this)
+        preferences = getPreferences(MODE_PRIVATE)
+        androidId = AndroidIdService.getAndroidId(this)
     }
 }
