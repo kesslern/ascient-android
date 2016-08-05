@@ -1,4 +1,4 @@
-package us.kesslern.freshms;
+package us.kesslern.freshms.domain;
 
 class PhoneClient {
     String phoneId

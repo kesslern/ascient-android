@@ -1,4 +1,4 @@
-package us.kesslern.freshms
+package us.kesslern.freshms.receiver
 
 import android.content.BroadcastReceiver
 import android.content.Context
@@ -8,6 +8,7 @@ import android.telephony.SmsMessage
 import android.util.Log
 import groovy.transform.CompileStatic
 import org.springframework.web.client.RestTemplate
+import us.kesslern.freshms.activity.MainActivity
 
 @CompileStatic
 class SMSBroadcastReceiver extends BroadcastReceiver {

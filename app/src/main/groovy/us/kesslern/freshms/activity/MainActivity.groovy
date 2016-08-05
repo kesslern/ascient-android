@@ -1,4 +1,4 @@
-package us.kesslern.freshms
+package us.kesslern.freshms.activity
 
 import android.content.IntentFilter
 import android.content.SharedPreferences
@@ -15,6 +15,12 @@ import butterknife.OnClick
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter
 import org.springframework.web.client.RestTemplate
 import org.springframework.web.util.UriComponentsBuilder
+import us.kesslern.freshms.R
+import us.kesslern.freshms.receiver.SMSBroadcastReceiver
+import us.kesslern.freshms.domain.PhoneClient
+import us.kesslern.freshms.service.AndroidIdService
+import us.kesslern.freshms.service.PermissionHandlerService
+import us.kesslern.freshms.util.Fluent
 
 class MainActivity extends AppCompatActivity {
 

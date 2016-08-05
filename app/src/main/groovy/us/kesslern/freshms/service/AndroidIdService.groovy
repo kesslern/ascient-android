@@ -1,4 +1,4 @@
-package us.kesslern.freshms
+package us.kesslern.freshms.service
 
 import android.app.Activity
 import android.provider.Settings;

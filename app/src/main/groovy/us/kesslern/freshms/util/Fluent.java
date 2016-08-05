@@ -1,4 +1,4 @@
-package us.kesslern.freshms;
+package us.kesslern.freshms.util;
 
 import android.os.AsyncTask;
 
@@ -18,7 +18,6 @@ public class Fluent<Result, Progress> extends AsyncTask<Void, Progress, Result> 
         this.then = then;
         this.progress = progress;
     }
-
 
     @Override
     protected Result doInBackground(Void... params) {
