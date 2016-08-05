@@ -54,7 +54,7 @@ public class Fluent<Result, Progress> extends AsyncTask<Void, Progress, Result> 
             return this;
         }
 
-        void then(ResultConsumer<Result> then) {
+        public void then(ResultConsumer<Result> then) {
             Fluent<Result,Progress> resultFluent = new Fluent<>(request, then, progress);
             resultFluent.execute();
         }
