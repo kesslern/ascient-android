@@ -16,10 +16,6 @@ class SMSBroadcastReceiver extends BroadcastReceiver {
     MainActivity activity
     RestTemplate restTemplate
 
-    SMSBroadcastReceiver() {
-        restTemplate = new RestTemplate()
-    }
-
     @Override
     void onReceive(Context context, Intent intent) {
         Log.v('test', 'received')
@@ -30,8 +26,8 @@ class SMSBroadcastReceiver extends BroadcastReceiver {
             Object[] pdus = bundle['pdus'] as Object[]
 
             for (Object pdu : pdus) {
-                SmsMessage message = SmsMessage.createFromPdu((byte[]) pdu)
-                Log.v('test', message.displayMessageBody)
+                SmsMessage smsMessage = SmsMessage.createFromPdu((byte[]) pdu)
+                Log.v('test', smsMessage.displayMessageBody)
                 activity.update()
             }
         }
