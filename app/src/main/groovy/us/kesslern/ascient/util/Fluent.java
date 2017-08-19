@@ -1,4 +1,4 @@
-package us.kesslern.freshms.util;
+package us.kesslern.ascient.util;
 
 import android.os.AsyncTask;
 

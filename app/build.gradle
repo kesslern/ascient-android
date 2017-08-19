@@ -26,7 +26,7 @@ android {
         exclude 'META-INF/notice.txt'
     }
     defaultConfig {
-        applicationId "us.kesslern.freshms"
+        applicationId "us.kesslern.ascient"
         minSdkVersion 15
         targetSdkVersion 24
         versionCode 1

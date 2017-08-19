@@ -1,4 +1,4 @@
-package us.kesslern.freshms.activity
+package us.kesslern.ascient.activity
 
 import android.content.IntentFilter
 import android.content.SharedPreferences
@@ -13,13 +13,13 @@ import butterknife.BindView
 import butterknife.ButterKnife
 import butterknife.OnClick
 import org.springframework.web.util.UriComponentsBuilder
-import us.kesslern.freshms.R
-import us.kesslern.freshms.domain.PhoneClient
-import us.kesslern.freshms.receiver.SMSBroadcastReceiver
-import us.kesslern.freshms.service.AndroidIdService
-import us.kesslern.freshms.service.PermissionHandlerService
-import us.kesslern.freshms.util.Fluent
-import us.kesslern.freshms.util.RestTemplateFactory
+import us.kesslern.ascient.R
+import us.kesslern.ascient.domain.PhoneClient
+import us.kesslern.ascient.receiver.SMSBroadcastReceiver
+import us.kesslern.ascient.service.AndroidIdService
+import us.kesslern.ascient.service.PermissionHandlerService
+import us.kesslern.ascient.util.Fluent
+import us.kesslern.ascient.util.RestTemplateFactory
 
 class MainActivity extends AppCompatActivity {
 

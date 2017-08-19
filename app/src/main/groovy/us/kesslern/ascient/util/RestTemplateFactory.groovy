@@ -1,4 +1,4 @@
-package us.kesslern.freshms.util
+package us.kesslern.ascient.util
 
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter
 import org.springframework.web.client.RestTemplate
