@@ -10,7 +10,6 @@ import groovy.transform.CompileStatic
 import org.springframework.web.client.RestTemplate
 import us.kesslern.ascient.activity.MainActivity
 
-@CompileStatic
 class SMSBroadcastReceiver extends BroadcastReceiver {
 
     MainActivity activity
