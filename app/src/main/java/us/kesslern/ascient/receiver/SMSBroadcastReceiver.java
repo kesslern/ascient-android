@@ -7,7 +7,6 @@ import android.os.Bundle;
 import android.telephony.SmsMessage;
 import android.util.Log;
 
-import org.codehaus.groovy.runtime.DefaultGroovyMethods;
 import org.springframework.web.client.RestTemplate;
 
 import us.kesslern.ascient.activity.MainActivity;
@@ -21,15 +20,12 @@ public class SMSBroadcastReceiver extends BroadcastReceiver {
         Log.v("test", "received");
 
         Bundle bundle = intent.getExtras();
+        Object[] pdus = (Object[]) bundle.get("pdus");
 
-        if (DefaultGroovyMethods.asBoolean(bundle)) {
-            Object[] pdus = DefaultGroovyMethods.asType(DefaultGroovyMethods.getAt(bundle, "pdus"), Object[].class);
-
-            for (Object pdu : pdus) {
-                SmsMessage smsMessage = SmsMessage.createFromPdu((byte[]) pdu);
-                Log.v("test", smsMessage.getDisplayMessageBody());
-                activity.update();
-            }
+        for (Object pdu : pdus) {
+            SmsMessage smsMessage = SmsMessage.createFromPdu((byte[]) pdu);
+            Log.v("test", smsMessage.getDisplayMessageBody());
+            activity.update();
         }
     }
 
