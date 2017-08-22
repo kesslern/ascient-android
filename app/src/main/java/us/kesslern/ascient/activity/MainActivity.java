@@ -82,7 +82,7 @@ public class MainActivity extends AppCompatActivity {
         new AsyncTask<Void, Void, PhoneClient>() {
             @Override
             protected PhoneClient doInBackground(Void... params) {
-                Log.d(TAG, "Executing regester task...");
+                Log.d(TAG, "Executing register task...");
                 String uri = "http://10.0.2.2:7007/phone/register";
                 URI completeUri = UriComponentsBuilder
                         .fromHttpUrl(uri)
