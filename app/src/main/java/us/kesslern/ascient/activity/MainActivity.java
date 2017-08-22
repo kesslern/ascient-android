@@ -44,8 +44,6 @@ public class MainActivity extends AppCompatActivity {
     public TextView uuidTextView;
     @BindView(R.id.switchSync)
     public Switch syncSwitch;
-    @BindView(R.id.bottomButton)
-    public Button bottomButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,14 +54,16 @@ public class MainActivity extends AppCompatActivity {
 
         bindDependencies();
         initializeSwitch();
-        totalSentTextView.setText("No messages received.");
+        totalSentTextView.setText(R.string.no_messages_received);
         PermissionHandlerService.requestPermissions(this);
         uuidTextView.setText(CLIENT_TOKEN + "\n" + androidId);
     }
 
     public void update() {
         totalReceived = totalReceived++;
-        totalSentTextView.setText(String.format("Total received: %s", String.valueOf(totalReceived)));
+        totalSentTextView.setText(
+                String.format(getString(R.string.total_received),
+                String.valueOf(totalReceived)));
     }
 
     public void updateBroadcastReceiver(final boolean enabled) {
@@ -85,7 +85,12 @@ public class MainActivity extends AppCompatActivity {
             protected PhoneClient doInBackground(Void... params) {
                 Log.d(TAG, "Executing regester task...");
                 String uri = "http://10.0.2.2:7007/phone/register";
-                URI completeUri = UriComponentsBuilder.fromHttpUrl(uri).queryParam("phoneId", androidId).queryParam("CLIENT_TOKEN", CLIENT_TOKEN).build().toUri();
+                URI completeUri = UriComponentsBuilder
+                        .fromHttpUrl(uri)
+                        .queryParam("phoneId", androidId)
+                        .queryParam("CLIENT_TOKEN", CLIENT_TOKEN)
+                        .build()
+                        .toUri();
                 return RestTemplateFactory.build().getForObject(completeUri, PhoneClient.class);
             }
 
