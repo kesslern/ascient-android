@@ -1,5 +1,6 @@
 package us.kesslern.ascient.receiver;
 
+import android.app.Activity;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -15,6 +16,10 @@ public class SMSBroadcastReceiver extends BroadcastReceiver {
     private MainActivity activity;
     private RestTemplate restTemplate;
 
+    public SMSBroadcastReceiver(MainActivity activity) {
+        this.activity = activity;
+    }
+
     @Override
     public void onReceive(Context context, Intent intent) {
         Log.v("test", "received");
@@ -27,14 +32,6 @@ public class SMSBroadcastReceiver extends BroadcastReceiver {
             Log.v("test", smsMessage.getDisplayMessageBody());
             activity.update();
         }
-    }
-
-    public MainActivity getActivity() {
-        return activity;
-    }
-
-    public void setActivity(MainActivity activity) {
-        this.activity = activity;
     }
 
     public RestTemplate getRestTemplate() {

@@ -30,7 +30,7 @@ class MainActivity() : AppCompatActivity() {
     private var totalReceived = 0
     private val preferences: SharedPreferences by lazy { getPreferences(Context.MODE_PRIVATE) }
     private val intentFilter = IntentFilter("android.provider.Telephony.SMS_RECEIVED")
-    private val smsReceiver = SMSBroadcastReceiver()
+    private val smsReceiver = SMSBroadcastReceiver(this)
     private val androidId: String by lazy { AndroidIdService.getAndroidId(this) }
 
     private val totalSentTextView: TextView by bindView(R.id.totalSent)
@@ -43,13 +43,12 @@ class MainActivity() : AppCompatActivity() {
         setContentView(R.layout.activity_main)
         PermissionHandlerService.requestPermissions(this)
 
-        smsReceiver.activity = this
         totalSentTextView.setText(R.string.no_messages_received)
-        uuidTextView.text = CLIENT_TOKEN + "\n" + androidId
+        uuidTextView.text = "$CLIENT_TOKEN\n$androidId"
 
         registerButton.setOnClickListener { register() }
 
-        syncSwitch.setOnCheckedChangeListener { buttonView, isChecked ->
+        syncSwitch.setOnCheckedChangeListener { _, isChecked ->
             updateBroadcastReceiver(isChecked)
         }
         syncSwitch.isChecked = preferences.getBoolean(ENABLED_SWITCH_STATE, false)
