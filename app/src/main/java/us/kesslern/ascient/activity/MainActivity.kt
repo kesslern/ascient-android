@@ -28,10 +28,10 @@ import us.kesslern.ascient.util.bindView
 class MainActivity() : AppCompatActivity() {
 
     private var totalReceived = 0
-    private var preferences: SharedPreferences? = null
+    private val preferences: SharedPreferences by lazy { getPreferences(Context.MODE_PRIVATE) }
     private val intentFilter = IntentFilter("android.provider.Telephony.SMS_RECEIVED")
     private val smsReceiver = SMSBroadcastReceiver()
-    private var androidId: String? = null
+    private val androidId: String by lazy { AndroidIdService.getAndroidId(this) }
 
     private val totalSentTextView: TextView by bindView(R.id.totalSent)
     private val uuidTextView: TextView by bindView(R.id.uuid)
@@ -40,8 +40,6 @@ class MainActivity() : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        preferences = getPreferences(Context.MODE_PRIVATE)
-        androidId = AndroidIdService.getAndroidId(this)
         setContentView(R.layout.activity_main)
         PermissionHandlerService.requestPermissions(this)
 
@@ -54,7 +52,7 @@ class MainActivity() : AppCompatActivity() {
         syncSwitch.setOnCheckedChangeListener { buttonView, isChecked ->
             updateBroadcastReceiver(isChecked)
         }
-        syncSwitch.isChecked = preferences?.getBoolean(ENABLED_SWITCH_STATE, false) ?: false
+        syncSwitch.isChecked = preferences.getBoolean(ENABLED_SWITCH_STATE, false)
     }
 
     fun update() {
@@ -63,7 +61,7 @@ class MainActivity() : AppCompatActivity() {
                 getString(R.string.total_received),
                 totalReceived.toString())
     }
-    
+
     private fun updateBroadcastReceiver(enabled: Boolean) {
         if (enabled) {
             registerReceiver(smsReceiver, intentFilter)
@@ -71,7 +69,7 @@ class MainActivity() : AppCompatActivity() {
             unregisterReceiver(smsReceiver)
         }
 
-        preferences!!.edit().putBoolean(ENABLED_SWITCH_STATE, enabled).apply()
+        preferences.edit().putBoolean(ENABLED_SWITCH_STATE, enabled).apply()
         Log.d(TAG, SMSBroadcastReceiver::class.java.simpleName + " state :" + enabled.toString())
     }
 
