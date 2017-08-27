@@ -47,7 +47,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun update() {
-        totalReceived = totalReceived++
+        totalReceived++
         totalSentTextView.text = String.format(
                 getString(R.string.total_received),
                 totalReceived.toString())
