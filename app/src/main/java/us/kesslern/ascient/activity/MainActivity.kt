@@ -9,12 +9,12 @@ import android.util.Log
 import android.widget.Button
 import android.widget.Switch
 import android.widget.TextView
+import butterknife.bindView
 import com.github.kittinunf.fuel.Fuel
 import us.kesslern.ascient.R
 import us.kesslern.ascient.receiver.SMSBroadcastReceiver
 import us.kesslern.ascient.service.AndroidIdService
 import us.kesslern.ascient.service.PermissionHandlerService
-import us.kesslern.ascient.util.bindView
 import java.util.*
 
 class MainActivity : AppCompatActivity() {
