@@ -1,4 +1,4 @@
-package us.kesslern.ascient.service
+package us.kesslern.ascient.permission
 
 import android.Manifest
 import android.app.Activity
