@@ -1,6 +1,5 @@
 apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
-apply plugin: 'android-apt'
 
 android {
     compileSdkVersion 26
@@ -35,12 +34,10 @@ android {
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
 
-    apt 'com.jakewharton:butterknife-compiler:8.2.1'
     compile "org.jetbrains.kotlin:kotlin-stdlib-jre7:$kotlin_version"
     compile 'com.android.support:appcompat-v7:26.0.1'
     compile 'com.android.support:recyclerview-v7:26.0.1'
     compile 'com.github.kittinunf.fuel:fuel-android:1.9.0'
-    compile 'com.jakewharton:butterknife:8.2.1'
     testCompile 'junit:junit:4.12'
 }
 repositories {
