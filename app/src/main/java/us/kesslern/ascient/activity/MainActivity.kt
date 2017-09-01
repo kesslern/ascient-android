@@ -13,8 +13,8 @@ import butterknife.bindView
 import com.github.kittinunf.fuel.Fuel
 import us.kesslern.ascient.R
 import us.kesslern.ascient.receiver.SMSBroadcastReceiver
-import us.kesslern.ascient.service.AndroidIdService
-import us.kesslern.ascient.service.PermissionHandlerService
+import us.kesslern.ascient.authentication.AndroidIdService
+import us.kesslern.ascient.permission.PermissionHandlerService
 import java.util.*
 
 class MainActivity : AppCompatActivity() {

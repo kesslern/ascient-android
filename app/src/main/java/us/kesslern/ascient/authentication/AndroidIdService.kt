@@ -1,7 +1,6 @@
-package us.kesslern.ascient.service
+package us.kesslern.ascient.authentication
 
 import android.app.Activity
-import android.provider.Settings
 
 import android.provider.Settings.*
 
