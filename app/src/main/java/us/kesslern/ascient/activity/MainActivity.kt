@@ -43,7 +43,12 @@ class MainActivity : AppCompatActivity() {
         totalSentTextView.setText(R.string.no_messages_received)
         uuidTextView.text = "$CLIENT_TOKEN\n$androidId"
 
-        registerButton.setOnClickListener { RegistrationService.register(androidId) }
+        registerButton.setOnClickListener {
+            RegistrationService.register(androidId,
+                    { d -> Log.d(TAG, "Register data: " + d) },
+                    { err -> Log.e(TAG, "Register error: " + err) })
+
+        }
 
         syncSwitch.setOnCheckedChangeListener { _, isChecked ->
             updateBroadcastReceiver(isChecked)
