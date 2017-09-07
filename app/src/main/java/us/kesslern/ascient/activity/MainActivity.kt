@@ -14,6 +14,7 @@ import com.github.kittinunf.fuel.Fuel
 import us.kesslern.ascient.R
 import us.kesslern.ascient.receiver.SMSBroadcastReceiver
 import us.kesslern.ascient.authentication.AndroidIdService
+import us.kesslern.ascient.authentication.RegistrationService
 import us.kesslern.ascient.permission.PermissionHandlerService
 import java.util.*
 
@@ -38,7 +39,7 @@ class MainActivity : AppCompatActivity() {
         totalSentTextView.setText(R.string.no_messages_received)
         uuidTextView.text = "$CLIENT_TOKEN\n$androidId"
 
-        registerButton.setOnClickListener { register() }
+        registerButton.setOnClickListener { RegistrationService.register(androidId) }
 
         syncSwitch.setOnCheckedChangeListener { _, isChecked ->
             updateBroadcastReceiver(isChecked)
@@ -62,18 +63,6 @@ class MainActivity : AppCompatActivity() {
 
         preferences.edit().putBoolean(ENABLED_SWITCH_STATE, enabled).apply()
         Log.d(TAG, SMSBroadcastReceiver::class.java.simpleName + " state :" + enabled.toString())
-    }
-
-    fun register() {
-        Log.d(TAG, "Bottom button pressed.")
-
-        Fuel.post("http://10.0.2.2:7007/phone/register").response { _, _, result ->
-            result.fold({ d ->
-                Log.d(TAG, "Register data: " + d)
-            }, { err ->
-                Log.e(TAG, "Register error: " + err)
-            })
-        }
     }
 
     companion object {
