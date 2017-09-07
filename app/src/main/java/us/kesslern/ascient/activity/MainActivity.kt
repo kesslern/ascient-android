@@ -41,7 +41,7 @@ class MainActivity : AppCompatActivity() {
                 "Accept" to "application/json")
 
         totalSentTextView.setText(R.string.no_messages_received)
-        uuidTextView.text = "$CLIENT_TOKEN\n$androidId"
+        uuidTextView.text = androidId
 
         registerButton.setOnClickListener {
             RegistrationService.register(androidId,
@@ -76,7 +76,6 @@ class MainActivity : AppCompatActivity() {
 
     companion object {
         private val TAG = MainActivity::class.java.simpleName
-        private val CLIENT_TOKEN = UUID.randomUUID().toString()
         private val ENABLED_SWITCH_STATE = "switch_state"
     }
 }
