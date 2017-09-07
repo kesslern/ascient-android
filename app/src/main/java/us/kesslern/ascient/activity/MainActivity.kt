@@ -11,6 +11,7 @@ import android.widget.Switch
 import android.widget.TextView
 import butterknife.bindView
 import com.github.kittinunf.fuel.Fuel
+import com.github.kittinunf.fuel.core.FuelManager
 import us.kesslern.ascient.R
 import us.kesslern.ascient.receiver.SMSBroadcastReceiver
 import us.kesslern.ascient.authentication.AndroidIdService
@@ -35,6 +36,9 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         PermissionHandlerService.requestPermissions(this)
+        FuelManager.instance.baseHeaders = mapOf(
+                "Content-Type" to "application/json",
+                "Accept" to "application/json")
 
         totalSentTextView.setText(R.string.no_messages_received)
         uuidTextView.text = "$CLIENT_TOKEN\n$androidId"
