@@ -13,12 +13,12 @@ object RegistrationService {
 
     private val TAG = tag(RegistrationService::class)
 
-    data class RegisterRequest(val androidId: String)
+    data class RegisterRequest(val applicationId: String)
 
-    fun register(androidId: String, success: (ByteArray) -> Unit, failure: (FuelError) -> Unit) {
+    fun register(applicationId: String, success: (ByteArray) -> Unit, failure: (FuelError) -> Unit) {
         Log.d(TAG, "Initiating registration")
 
-        val request = RegisterRequest(androidId)
+        val request = RegisterRequest(applicationId)
 
         Fuel.post("http://10.0.2.2:8080/phone/register")
                 .body(Gson().toJson(request))

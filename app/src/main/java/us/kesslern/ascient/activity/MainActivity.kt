@@ -13,10 +13,10 @@ import butterknife.bindView
 import com.github.kittinunf.fuel.core.FuelManager
 import us.kesslern.ascient.R
 import us.kesslern.ascient.receiver.SMSBroadcastReceiver
-import us.kesslern.ascient.authentication.AndroidIdService
 import us.kesslern.ascient.authentication.RegistrationService
 import us.kesslern.ascient.tag
 import us.kesslern.ascient.permission.PermissionHandlerService
+import java.util.*
 
 class MainActivity : AppCompatActivity() {
 
@@ -24,7 +24,6 @@ class MainActivity : AppCompatActivity() {
     private val preferences: SharedPreferences by lazy { getPreferences(Context.MODE_PRIVATE) }
     private val intentFilter = IntentFilter("android.provider.Telephony.SMS_RECEIVED")
     private val smsReceiver = SMSBroadcastReceiver(this)
-    private val androidId: String by lazy { AndroidIdService.getAndroidId(this) }
 
     private val totalSentTextView: TextView by bindView(R.id.totalSent)
     private val uuidTextView: TextView by bindView(R.id.uuid)
@@ -39,11 +38,16 @@ class MainActivity : AppCompatActivity() {
                 "Content-Type" to "application/json",
                 "Accept" to "application/json")
 
+        if (!preferences.contains("applicationId")) {
+            preferences.edit().putString("applicationId", UUID.randomUUID().toString()).apply()
+        }
+        val applicationId = preferences.getString("applicationId", "")
+
         totalSentTextView.setText(R.string.no_messages_received)
-        uuidTextView.text = androidId
+        uuidTextView.text = applicationId
 
         registerButton.setOnClickListener {
-            RegistrationService.register(androidId,
+            RegistrationService.register(applicationId,
                     { d -> Log.d(TAG, "Register data: " + d) },
                     { err -> Log.e(TAG, "Register error: " + err) })
 
