@@ -10,10 +10,12 @@ import android.util.Log
 import us.kesslern.ascient.activity.MainActivity
 import android.provider.Telephony
 import android.os.Build
-
+import us.kesslern.ascient.tag
 
 
 class SMSBroadcastReceiver(private val activity: MainActivity) : BroadcastReceiver() {
+
+    private val TAG = tag(SMSBroadcastReceiver::class)
 
     override fun onReceive(context: Context, intent: Intent) {
         Log.v("test", "received")
@@ -30,7 +32,7 @@ class SMSBroadcastReceiver(private val activity: MainActivity) : BroadcastReceiv
                     SmsMessage.createFromPdu(pdus[0] as ByteArray)
                 }
 
-        Log.v("test", smsMessage.displayMessageBody)
+        Log.v(TAG, smsMessage.displayMessageBody)
         activity.update()
     }
 }
