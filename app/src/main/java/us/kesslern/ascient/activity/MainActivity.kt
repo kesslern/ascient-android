@@ -10,14 +10,13 @@ import android.widget.Button
 import android.widget.Switch
 import android.widget.TextView
 import butterknife.bindView
-import com.github.kittinunf.fuel.Fuel
 import com.github.kittinunf.fuel.core.FuelManager
 import us.kesslern.ascient.R
 import us.kesslern.ascient.receiver.SMSBroadcastReceiver
 import us.kesslern.ascient.authentication.AndroidIdService
 import us.kesslern.ascient.authentication.RegistrationService
+import us.kesslern.ascient.tag
 import us.kesslern.ascient.permission.PermissionHandlerService
-import java.util.*
 
 class MainActivity : AppCompatActivity() {
 
@@ -71,11 +70,11 @@ class MainActivity : AppCompatActivity() {
         }
 
         preferences.edit().putBoolean(ENABLED_SWITCH_STATE, enabled).apply()
-        Log.d(TAG, SMSBroadcastReceiver::class.java.simpleName + " state :" + enabled.toString())
+        Log.d(TAG, tag(SMSBroadcastReceiver::class) + " state :" + enabled.toString())
     }
 
     companion object {
-        private val TAG = MainActivity::class.java.simpleName
+        private val TAG = tag(MainActivity::class)
         private val ENABLED_SWITCH_STATE = "switch_state"
     }
 }

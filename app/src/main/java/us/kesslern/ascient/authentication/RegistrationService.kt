@@ -4,13 +4,14 @@ import android.util.Log
 import com.github.kittinunf.fuel.Fuel
 import com.github.kittinunf.fuel.core.FuelError
 import com.google.gson.Gson
+import us.kesslern.ascient.tag
 
 /**
  * Logic for managing registration of the android device with the backend.
  */
 object RegistrationService {
 
-    private val TAG = RegistrationService::class.java.simpleName
+    private val TAG = tag(RegistrationService::class)
 
     data class RegisterRequest(val androidId: String)
 
