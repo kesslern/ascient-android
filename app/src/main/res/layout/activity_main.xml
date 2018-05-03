@@ -10,6 +10,17 @@
     tools:context=".activity.MainActivity">
 
     <Button
+        android:id="@+id/loginButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignTop="@+id/bottomButton"
+        android:layout_marginStart="124dp"
+        android:clickable="true"
+        android:focusable="true"
+        android:text="Login" />
+
+    <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Register"
@@ -51,5 +62,28 @@
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
         android:layout_marginTop="19dp" />
+
+    <EditText
+        android:id="@+id/usernameInput"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_alignStart="@+id/bottomButton"
+        android:layout_marginTop="167dp"
+        android:ems="10"
+        android:hint="Username"
+        android:inputType="textPersonName"
+        android:layout_alignLeft="@+id/bottomButton" />
+
+    <EditText
+        android:id="@+id/passwordInput"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignStart="@+id/bottomButton"
+        android:layout_centerVertical="true"
+        android:ems="10"
+        android:hint="Password"
+        android:inputType="textPassword"
+        android:layout_alignLeft="@+id/bottomButton" />
 
 </RelativeLayout>

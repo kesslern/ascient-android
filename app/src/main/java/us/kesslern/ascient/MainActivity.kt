@@ -1,4 +1,4 @@
-package us.kesslern.ascient.activity
+package us.kesslern.ascient
 
 import android.content.Context
 import android.content.IntentFilter
@@ -8,11 +8,6 @@ import android.support.v7.app.AppCompatActivity
 import android.util.Log
 import com.github.kittinunf.fuel.core.FuelManager
 import kotlinx.android.synthetic.main.activity_main.*
-import us.kesslern.ascient.R
-import us.kesslern.ascient.authentication.RegistrationService
-import us.kesslern.ascient.permission.PermissionHandlerService
-import us.kesslern.ascient.receiver.SMSBroadcastReceiver
-import us.kesslern.ascient.tag
 import java.util.*
 
 class MainActivity : AppCompatActivity() {
@@ -38,11 +33,11 @@ class MainActivity : AppCompatActivity() {
         totalSent.setText(R.string.no_messages_received)
         uuid.text = applicationId
 
-        bottomButton.setOnClickListener {
-            RegistrationService.register(applicationId,
-                    { d -> Log.d(TAG, "Register data: " + d) },
-                    { err -> Log.e(TAG, "Register error: " + err) })
-
+        loginButton.setOnClickListener {
+            Log.i(TAG, "${usernameInput.text}, ${passwordInput.text}")
+            ApiService.login(usernameInput.text.toString(), passwordInput.text.toString(),
+                    { Log.i(TAG, "Success! $it")},
+                    { Log.i(TAG, "Failure!")})
         }
 
         switchSync.setOnCheckedChangeListener { _, isChecked ->

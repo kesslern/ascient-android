@@ -1,16 +1,13 @@
-package us.kesslern.ascient.receiver
+package us.kesslern.ascient
 
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
-import android.os.Bundle
 import android.telephony.SmsMessage
 import android.util.Log
 
-import us.kesslern.ascient.activity.MainActivity
 import android.provider.Telephony
 import android.os.Build
-import us.kesslern.ascient.tag
 
 
 class SMSBroadcastReceiver(private val activity: MainActivity) : BroadcastReceiver() {
